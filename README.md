@@ -1,44 +1,18 @@
-# Build boot2docker.iso with VirtualBox Guest Additions and Fig.sh
+## 简介 ##
 
-__Allows the mount of a VirtualBox Share into boot2docker__ which is useful for doing actual work. So from `boot2docker ssh` you can do things like:  
-```bash
-# In your project directory (ie /home/docker/code/myproject)
-fig up
-```
+在windows上安装docker时，一般到[https://github.com/boot2docker/windows-installer/releases](https://github.com/boot2docker/windows-installer/releases "")下载boot2docker.exe安装程序，但其自带的iso有以下局限：
 
-This Dockerfile will download the latest boot2docker image (see ``FROM boot2docker/boot2docker``),
-adds VirtualBox Guest Additions for your running VirtualBox version and fig python packages.
+1. boot2docker-vm 无法通过virtualbox和windows共享文件夹
+2. 无法使用更多docker工具，比如fig等
+3. boot2docker-vm启动后，不是中国大陆时区
 
-*You don't have to use Fig.sh, but its available if you want it.*
+而这个image将解决这些问题。
 
-## Build
-To build your modified `boot2docker.iso` you need to have a running version of docker. Clone this repo and build as normal:
+## 制作iso ##
 
-I have included my original iso for those who are trying to accomplish this with out a tremendous amount of headache. However, you might need to modify the VirtualBox version and share directories in the Dockerfile to match your setup.
-```bash
+`git clone` 后，请在当期目录下执行以下指令:
 
-# build the actual boot2docker.iso with virtual box guest additions
-docker build -t boot2docker-vbga-fig .
-
-# run the image
-docker run  --rm boot2docker-vbga-fig > boot2docker.iso
-```
-
-## Install the new.iso
-Move the new iso you created in the *Build* step to the .boot2docker directory in you home:
-```bash
-
-# use the new boot2docker.iso
-boot2docker stop
-mv ~/.boot2docker/boot2docker.iso ~/.boot2docker/boot2docker.iso.backup
-mv boot2docker.iso ~/.boot2docker/boot2docker.iso
-```
-
-## Setup the share
-You can do this from the terminal or in the VirtualBox GUI. This is how you do it in a terminal:
-``` bash
-
-VBoxManage sharedfolder add boot2docker-vm -name home -hostpath /home/docker/code
-boot2docker up
-boot2docker ssh "ls /home/docker/code" # to verify if it worked
-```
+    # docker built -t qiankunli/boot2docker .
+    # docker run --rm qiankunli/boot2docker > boot2docker.iso
+    
+然后，关闭boot2docker-vm，用生成的boot2docker.iso替换掉`<home dir>/.boot2docker`目录下的`boot2docker.iso`即可
