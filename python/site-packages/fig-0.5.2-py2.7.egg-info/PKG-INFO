@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: fig
+Version: 0.5.2
+Summary: Punctual, lightweight development environments using Docker
+Home-page: http://www.fig.sh/
+Author: Docker, Inc.
+Author-email: UNKNOWN
+License: Apache License 2.0
+Description: UNKNOWN
+Platform: UNKNOWN

@@ -1,0 +1,10 @@
+#!/usr/local/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'fig==0.5.2','console_scripts','fig'
+__requires__ = 'fig==0.5.2'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('fig==0.5.2', 'console_scripts', 'fig')()
+    )
